@@ -22,7 +22,7 @@ _Bool findBuiltIns(config *build)
 
 	while (getBuiltIns[i].command)
 	{
-		if (_strcmp(build->args[0], getBuiltIns[i].command) == 0)
+././ . ,../m, ./?.		if (_strcmp(build->args[0], getBuiltIns[i].command) == 0)
 		{
 			getBuiltIns[i].func(build);
 			freeArgsAndBuffer(build);
