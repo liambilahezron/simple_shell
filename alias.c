@@ -25,9 +25,9 @@ char *getalias(char *name)
 	while (ptr != NULL && _strcmp(ptr->name, name))
 	{
 #ifdef DEBUGMODE
-	printf("Checked .%s. against .%s.\n", name, ptr->name);
+		printf("Checked .%s. against .%s.\n", name, ptr->name);
 #endif
-	ptr = ptr->next;
+		ptr = ptr->next;
 	}
 	if (ptr == NULL)
 	{
@@ -39,6 +39,7 @@ char *getalias(char *name)
 #ifdef DEBUGMODE
 	printf("Checking alias %s\n", ptr->val);
 #endif
+
 	free(name);
 	return (getalias(_strdup(ptr->val)));
 }
@@ -58,7 +59,7 @@ int setalias(char *name, char *val)
 	{
 		new = malloc(sizeof(AliasData));
 		if (new == NULL)
-			retun (-1);
+			return (-1);
 		new->name = name;
 		new->val = val;
 		new->next = NULL;
@@ -77,7 +78,7 @@ int setalias(char *name, char *val)
 	{
 		new = malloc(sizeof(AliasData));
 		if (new == NULL)
-			return(-1);
+			return (-1);
 		new->name = name;
 		new->val = val;
 		new->next = NULL;
@@ -104,13 +105,14 @@ int unsetalias(char *name)
 		free(ptr);
 		return (0);
 	}
+
 	while (ptr->next != NULL && _strcmp(ptr->next->name, name))
 		ptr = ptr->next;
 	if (!_strcmp(ptr->next->name, name))
 	{
 		next = ptr->next->next;
 		free(ptr->next->name);
-
+		free(ptr->next);
 		ptr->next = next;
 	}
 	return (0);
@@ -125,7 +127,8 @@ int aliascmd(char *av[])
 	AliasData *alist = *(getalist());
 	AliasData *ptr = alist;
 	int i;
-	har *name, *val;
+	char *name, *val;
+
 #ifdef DEBUGMODE
 	printf("av1 %p ptr %p\n", av[1], ptr);
 	printf("av1 %s\n", av[1]);
@@ -163,70 +166,29 @@ int aliascmd(char *av[])
 				free(name);
 				return (-1);
 			}
+			setalias(name, val);
+		}
+		else
+		{
+#ifdef DEBUGMODE
+			printf("Printing alias:%s:\n", name);
+#endif
+			val = _strdup(name);
+			val = getalias(val);
+#ifdef DEBUGMODE
+			printf("Val:%s\n", val);
+#endif
+			if (!_strcmp(val, name))
+			{
+				fprintstrs(1, "alias: ", name, " not found\n", NULL);
+				free(val);
+			}
 			else
 			{
-#ifdef DEBUGMODE
-				printf("Printing alias:%s:\n", name);
-#endif
-				val = _strdup(name);
-				val = getalias(val);
-#ifdef DEBUGMODE
-				printf("Val:%s\n", val);
-#endif
-				if (av[1] == NULL)
-				{
-					while (ptr != NULL)
-					{
-						fprintstrs(1, ptr->name, "='", ptr->val, "'\n", NULL);
-						ptr = ptr->next;
-					}
-					return (0);
-				}
-#ifdef DEBUGMODE
-				printf("Not blank args\n");
-#endif
-				for (i = 1; av[i] != NULL; i++)
-				{
-#ifdef DEBUGMODE
-					printf("Alias arg %s\n", av[i]);
-#endif
-					name = strtok(av[i], "=");
-					val = strtok(NULL, "=");
-					if (val != NULL)
-					{
-#ifdef DEBUGMODE
-						printf("Setting alias:%s:to:%s:\n", name, val);
-#endif
-						name = _strdup(name);
-						if (name == NULL)
-							return (-1);
-						val = _strdup(val);
-						if (val == NULL)
-						{
-							free(name);
-							free (-1);
-						}
-						else
-						{
-#ifdef DEBUGMODE
-							printf("Printing alias:%s:\n", name);
-#endif
-							val = _strdup(name);
-							val = getalias(val);
-#ifdef DEBUGMODE
-							printf("Val:%s\n", val);
-#endif
-							if (!_strcmp(val, name))
-							{
-								fprintstrs(1, "alias: ", name, " not found\n", NULL);
-								free(val);
-							}
-							else
-							{
-								printstrs(1, name, "='", val, "'\n", NULL);
-								free(val);
-							}
-						}
-					}
-					return (0);
-				}
+				fprintstrs(1, name, "='", val, "'\n", NULL);
+				free(val);
+			}
+		}
+	}
+	return (0);
+}

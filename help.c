@@ -56,6 +56,25 @@ int help(char *cmd)
 		fd = close(fd);
 		return (0);
 	}
+	else if (!_strcmp(cmd, "help"))
+	{
+		file = "help_hel";
+		fd = open(file, O_RDWR);
+		s = malloc(256);
+		if (s == NULL)
+			return (-1);
+		while ((r = read(fd, s, 256)) > 0)
+		{
+			r = write(1, s, r);
+			if  (r == -1)
+			{
+				return (-1);
+			}
+		}
+		free(s);
+		fd = close(fd);
+		return (0);
+	}
 	else if (!_strcmp(cmd, "alias"))
 	{
 		file = "help_al";
@@ -125,7 +144,7 @@ int help(char *cmd)
 			r = write(1, s, r);
 			if  (r == -1)
 			{
-				retrun(-1);
+				return (-1);
 			}
 		}
 		free(s);
@@ -178,4 +197,3 @@ int help(char *cmd)
 		return (0);
 	}
 }
-

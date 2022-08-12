@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * _cd - change directory builtin
+ *_cd - change directory builtin
  * @av: argument to work with
  * Return: int
  */
@@ -52,7 +52,7 @@ int _cd(char *av[])
 	while (pathbit != NULL)
 	{
 		if (pathbit[0] == '.' && pathbit[1] == '.'
-				&& pathbit[2] == 0)
+		    && pathbit[2] == 0)
 		{
 #ifdef DEBUGCD
 			printf("going back a directory%s:%s\n", newpath, newpath);
@@ -99,4 +99,3 @@ int _cd(char *av[])
 	free(newpath);
 	return (ret);
 }
-

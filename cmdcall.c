@@ -10,7 +10,6 @@ int checkpath(char *av[])
 	char *path, *pathptr, *pathvar, *ptr, *pathenv = "PATH", *linect;
 	int pathlen, cmdlen;
 
-
 #ifdef DEBUGMODE
 	printf("In checkpath\n");
 #endif
@@ -52,7 +51,7 @@ int checkpath(char *av[])
 				free(pathenv);
 				return (pathlen);
 			}
-			fre(path);
+			free(path);
 			if (*pathvar == ':')
 				pathvar++;
 		}
@@ -123,7 +122,7 @@ int cmdcall(char *av[], char *cmd)
 	{
 		wait(&status);
 	}
-#ifdef DEBUGMOD
+#ifdef DEBUGMODE
 	printf("Status %d\n", status);
 #endif
 	free(environ);
@@ -176,8 +175,8 @@ int builtincall(char *av[])
 /*
  *
  * else if (!_strcmp(av[0], "getenv"))
- * 	retval = !printf("%s\n", _getenv(av[1]));
- */
+ *	retval = !printf("%s\n", _getenv(av[1]));
+*/
 	else if (!_strcmp(av[0], "history"))
 		retval = print_hist();
 	else if (!_strcmp(av[0], "help"))
@@ -195,8 +194,8 @@ int builtincall(char *av[])
 	else if (!_strcmp(av[0], "unalias"))
 		retval = unsetalias(av[1]);
 	else if (av[0][0] != '/' &&
-			!(av[0][0] == '.' && (av[0][1] == '/' ||
-					(av[0][1] == '.' && av[0][2] == '/'))))
+		 !(av[0][0] == '.' && (av[0][1] == '/' ||
+				       (av[0][1] == '.' && av[0][2] == '/'))))
 		retval = checkpath(av);
 	else
 		retval = cmdcall(av, av[0]);
