@@ -9,10 +9,12 @@
  * @next: pointer to next node
  *
  */
+
 typedef struct AliasData
 {
 	char *name;
 	char *val;
 	struct AliasData *next;
-}AliasData;
+} AliasData;
+
 #endif
