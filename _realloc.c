@@ -1,10 +1,10 @@
 #include "shell.h"
 /**
- *  _realloc - reallocates a memory block using malloc and free
- *  @ptr: void pointer
- *  @old_size: unsigned int
- *  @new_size: unsigned int
- *  Return: pointer
+ * _realloc - reallocates a memory block using malloc and free
+ * @ptr: void pointer
+ * @old_size: unsigned int
+ * @new_size: unsigned int
+ * Return: pointer
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
@@ -13,6 +13,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 	if (new_size == old_size)
 		return (ptr);
+
 	if (new_size > 0 || ptr == 0)
 	{
 		ret = malloc(new_size);
@@ -31,6 +32,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 			*write++ = *read++;
 		}
 	}
+
 	free(ptr);
 	return (ret);
 }
