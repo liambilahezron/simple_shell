@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- *
  * _atoi - converts string to number
  * @s : pointer int
  * _atoi: converts string to number
- * Return: T
+ * Return: The result (converted number)
  */
+
 int _atoi(char *s)
 {
 	int i;
@@ -16,9 +16,9 @@ int _atoi(char *s)
 	int neg;
 
 	neg = 0;
-	check_num =0;
-	sum =0;
-	i =0;
+	check_num = 0;
+	sum = 0;
+	i = 0;
 
 	/* run a while loop */
 	while (s[i] != '\0')
@@ -44,5 +44,3 @@ int _atoi(char *s)
 		sum = sum * -1;
 	return (sum);
 }
-
-									

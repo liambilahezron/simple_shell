@@ -10,7 +10,7 @@ int _getline(char **lineptr, int fd)
 	int size = 1025;
 	int old_size = 0;
 	int r = 1;
-	int sum = 0; 
+	int sum = 0;
 	static char buffer[1025];
 	static int begin;
 	static int end;
@@ -20,18 +20,20 @@ int _getline(char **lineptr, int fd)
 	if (fd == -2)
 	{
 		begin = 0;
-		end  = 0;
+		end = 0;
 	}
+
 	if (lineptr == NULL)
 	{
 		return (0);
 	}
 	if (*lineptr == NULL)
 	{
-		*lineptr = malloc(sizeof(char) * size + 1)
-			if (*lineptr == NULL)
-				return (-1);
+		*lineptr = malloc(sizeof(char) * size + 1);
+		if (*lineptr == NULL)
+			return (-1);
 	}
+
 	while (1)
 	{
 		if (begin == end)
@@ -84,7 +86,7 @@ int _getline(char **lineptr, int fd)
 			old_size = size;
 			size = size + 1024;
 			*lineptr = _realloc(*lineptr, old_size, size);
-
+			if (*lineptr == NULL)
 			{
 				return (-1);
 			}
@@ -97,6 +99,3 @@ int _getline(char **lineptr, int fd)
 		/*printf("j: %d, i:%d, r:%d\n", j, i ,r);*/
 	}
 }
-
-				
-
